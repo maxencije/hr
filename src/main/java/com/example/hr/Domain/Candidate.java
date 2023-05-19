@@ -1,10 +1,9 @@
 package com.example.hr.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "candidate")
@@ -14,6 +13,7 @@ public class Candidate {
     @GeneratedValue
     private int candidate_id;
 
+    //@Column(unique = true)
     private String name;
     private Date birthday;
     private String contact;
@@ -24,10 +24,13 @@ public class Candidate {
             joinColumns = { @JoinColumn(name = "candidate_id") },
             inverseJoinColumns = { @JoinColumn(name = "skill_id") }
     )
-    private List<Skill> skills = new ArrayList<>();
+    @JsonIgnore
+    private Set<Skill> skills = new HashSet<>();
 
     public Candidate() {
     }
+
+
 
     public void setCandidate_id(int candidate_id) {
         this.candidate_id = candidate_id;
@@ -49,7 +52,7 @@ public class Candidate {
         this.email = email;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
 
@@ -73,7 +76,7 @@ public class Candidate {
         return email;
     }
 
-    public List<Skill> getSkills() {
+    public Set<Skill> getSkills() {
         return skills;
     }
 }

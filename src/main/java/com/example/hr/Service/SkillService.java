@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SkillService {
@@ -27,11 +28,13 @@ public class SkillService {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<List<Candidate>> findCandidatesBySkill(int id) {
+    public ResponseEntity<Set<Candidate>> findCandidatesBySkill(Integer id) {
         Optional<Skill> optionalSkill = skillRepo.findById(id);
-        if(optionalSkill.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(optionalSkill.get().getCandidates(), HttpStatus.FOUND);
+        return optionalSkill.map(skill -> new ResponseEntity<>(skill.getCandidates(), HttpStatus.FOUND)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+    }
+
+    public ResponseEntity<Skill> findSkillById(Integer id) {
+        Optional<Skill> optionalSkill = skillRepo.findById(id);
+        return optionalSkill.map(skill -> new ResponseEntity<>(skill, HttpStatus.FOUND)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 }

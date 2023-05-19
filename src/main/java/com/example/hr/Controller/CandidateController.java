@@ -26,14 +26,14 @@ public class CandidateController {
         return candidateService.addCandidate(candidate);
     }
 
-    @PostMapping("/candidate/{id}")
-    public ResponseEntity<Skill> addSkillToCandidate(@RequestBody Skill skill, int id) {
-        return candidateService.addSkillToCandidate(skill, id);
+    @PostMapping("/candidate/{id_candidate}/{id_skill}")
+    public ResponseEntity<Skill> addSkillToCandidate(@PathVariable int id_candidate,@PathVariable int id_skill) {
+        return candidateService.addSkillToCandidate(id_candidate, id_skill);
     }
 
-    @DeleteMapping("/candidate/skill/{id}")
-    public ResponseEntity<Skill> removeSkillFromCandidate(@RequestBody Skill skill, int id) {
-        return candidateService.removeSkillFromCandidate(skill, id);
+    @DeleteMapping("/candidate/{candidateID}/{skillID}")
+    public ResponseEntity<Skill> removeSkillFromCandidate(@PathVariable int candidateID,@PathVariable int skillID) {
+        return candidateService.removeSkillFromCandidate(candidateID, skillID);
     }
 
     @DeleteMapping("/candidate/{id}")
@@ -41,7 +41,7 @@ public class CandidateController {
         return candidateService.removeCandidate(id);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/candidate/search/{name}")
     public ResponseEntity<Candidate> findCandidateByName(@PathVariable String name) {
         return candidateService.findCandidateByName(name);
     }

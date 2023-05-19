@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /*
 1. dodavanje skill-a
@@ -26,8 +27,13 @@ public class SkillController {
         return skillService.addSkill(skill);
     }
 
+    @GetMapping("/skill/search/{id}")
+    public ResponseEntity<Skill> findSkillById(@PathVariable int id) {
+        return skillService.findSkillById(id);
+    }
+
     @GetMapping("/skill/{id}")
-    public ResponseEntity<List<Candidate>> findCandidatesBySkill(@PathVariable("id") int id) {
+    public ResponseEntity<Set<Candidate>> findCandidatesBySkill(@PathVariable("id") int id) {
         return skillService.findCandidatesBySkill(id);
     }
 }

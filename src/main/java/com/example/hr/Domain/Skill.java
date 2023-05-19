@@ -2,8 +2,7 @@ package com.example.hr.Domain;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "skill")
@@ -16,7 +15,7 @@ public class Skill {
     private String name;
 
     @ManyToMany(mappedBy = "skills")
-    private List<Candidate> candidates = new ArrayList<>();
+    private Set<Candidate> candidates = new HashSet<>();
 
     public Skill() {
     }
@@ -29,7 +28,7 @@ public class Skill {
         this.name = name;
     }
 
-    public void setCandidates(List<Candidate> candidates) {
+    public void setCandidates(Set<Candidate> candidates) {
         this.candidates = candidates;
     }
 
@@ -41,7 +40,7 @@ public class Skill {
         return name;
     }
 
-    public List<Candidate> getCandidates() {
+    public Set<Candidate> getCandidates() {
         return candidates;
     }
 }
